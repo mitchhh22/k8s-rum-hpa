@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="public/css/style.css">
+
+  <meta charset="utf-8">
+  <title>Boom</title>
+
+  <body>
+<div class="col-lg-6 col-centered" style="margin-top:15px" id="pagedata">
+
+
+  <h4 class="headerkey">Request Info</h4>
+  <table class="table table-striped" id="requestinfo">
+<tbody>
+  {% for key,val in data %}
+
+  <tr>
+      <td style="white-space: nowrap;" class="tablekey">
+      {{ key }}</td>
+      <td style="word-wrap: break-word;" class="tableval"> <strong>{{ val }}</strong> </td>
+  </tr>
+
+  {% endfor %}
+</tbody>
+  </table>
+<h4 class="headerkey"> Client Info</h4>
+  <table id="GeoResults" class="table table-striped">
+    <tr id="as"></tr>
+    <tr id="city"></tr>
+    <tr id="country"></tr>
+    <tr id="isp"></tr>
+    <tr id="lat"></tr>
+    <tr id="lon"></tr>
+    <tr id="org"></tr>
+    <tr id="query"></tr>
+    <tr id="region"></tr>
+    <tr id="status"></tr>
+    <tr id="timezone"></tr>
+    <tr id="zip"></tr>
+  </table>
+ 
+
+
+
+
+        <h4 class="headerkey"> Server Info</h4>
+<table  class="table table-striped" id="serverinfo">
+
+        <tr id="time"></tr>
+        <tr id="Pop"> </tr>
+        <tr id="p2"></tr>
+        <tr id="rtt"></tr>
+</table>
+
+
+
+
+
+        <h4 class="headerkey"> Latency Info</h4>
+<table  class="table table-striped" id="latencyinfo">
+
+        <tr id="loadtime">
+            <td class="tablekey">Page Load</td>
+            <td class="tableval"><strong><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading...</strong></td>
+        </tr>
+        <tr id="bandwidthh">
+            <td class="tablekey">Bandwidth</td>
+            <td class="tableval"><strong><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading...</strong></td>
+        </tr>
+        <tr id="latency">
+            <td class="tablekey">Connection Latency</td>
+            <td class="tableval"><strong><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading...</strong></td>
+        </tr>
+
+</table>
+
+
+
+
+</div>
+
+
+
+
+<script src="public/js/boomerang.js" type="text/javascript"></script>
+<script src="public/js/rt.js"></script>
+<script src="public/js/bw.js" type="text/javascript"></script>
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script src="public/js/script.js" type="text/javascript"></script>
+<script src="public/js/data.js" type="text/javascript"></script>
+
+
+
+
+
+
+
+</body>
+
+</html>
