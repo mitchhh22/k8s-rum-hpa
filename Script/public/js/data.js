@@ -74,7 +74,7 @@ $('#latencyinfo').find('tr').each(function(){
      
 });
 
-var socket = io(':3003');
+var socket = io(':3004');
 
     socket.emit('finalanswer', JSON.stringify(obj));
 

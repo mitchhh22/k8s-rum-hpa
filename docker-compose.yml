@@ -5,7 +5,7 @@ services:
       context: ./socket/
       dockerfile: Dockerfile
     ports:
-     - "3003:3003"
+     - "3004:3004"
     restart: always
    webapp:
      build:

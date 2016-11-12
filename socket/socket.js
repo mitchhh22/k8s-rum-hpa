@@ -16,6 +16,6 @@ fs.writeFile(filename['Query String'] + '.json', msg, function (err) {
 });    
 });
 
-http.listen(3003, function(){
-  console.log('listening on *:3003');
+http.listen(3004, function(){
+  console.log('listening on *:3004');
 });
