@@ -4,8 +4,12 @@ services:
     build:
       context: ./socket/
       dockerfile: Dockerfile
+    links:
+     - fluentd
     ports:
      - "3004:3004"
+    logging:
+      driver: fluentd
     restart: always
    webapp:
      build:
@@ -21,4 +25,25 @@ services:
      ports:
       - "80:80"
      restart: always 
-
+   fluentd:
+     image: fluent/fluentd:ubuntu-base
+     volumes:
+      - ./fluentd/etc/fluentd.conf:/fluentd/etc/fluent.conf
+      - ./fluentd/etc/start.sh:/fluentd/etc/start.sh
+     command: /fluentd/etc/start.sh
+     ports:
+      - "24224:24224"
+   elasticsearch:
+     image: elasticsearch
+     ports:
+       - "9200:9200"
+       - "9300:9300"
+     volumes:
+       - /usr/share/elasticsearch/data:/usr/share/elasticsearch/data
+   kibana:
+     image: kibana
+     restart: always
+     ports:
+       - "5601:5601"
+     environment:
+       - ELASTICSEARCH_URL=http://elasticsearch:9200
