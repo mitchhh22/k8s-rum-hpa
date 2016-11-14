@@ -13,8 +13,6 @@ services:
      - "3004:3004"
     logging:
       driver: fluentd
-      options:
-        fluentd-address: "fluentd:24224"
     restart: always
    webapp:
      build:
@@ -34,6 +32,8 @@ services:
      image: fluent/fluentd:ubuntu-base
      links: 
        - elasticsearch
+     ports:
+      - "24224:24224"
      volumes:
       - ./fluentd/etc/fluentd.conf:/fluentd/etc/fluent.conf
       - ./fluentd/etc/start.sh:/fluentd/etc/start.sh
