@@ -4,10 +4,10 @@ Multiple images are downloaded in the background and used to measure the through
 
 ## Demo
 ### Connection Test
-[http://boom.mitchellharding.com](http://boom.mitchellharding.com)
+[http://45.55.10.149](http://45.55.10.149)
 
 ### Kibana
-[http://boom.mitchellharding.com:5601](http://boom.mitchellharding.com:5601)
+[http://45.55.10.149:5601](http://45.55.10.149:5601)
 
 ## Installation
 
