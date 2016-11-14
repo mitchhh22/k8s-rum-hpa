@@ -34,14 +34,18 @@ services:
      ports:
       - "24224:24224"
    elasticsearch:
-     image: elasticsearch
+     build:
+      context: ./elasticsearch/
+      dockerfile: Dockerfile
      ports:
        - "9200:9200"
        - "9300:9300"
      volumes:
        - /usr/share/elasticsearch/data:/usr/share/elasticsearch/data
    kibana:
-     image: kibana
+     build:
+      context: ./kibana/
+      dockerfile: Dockerfile
      restart: always
      ports:
        - "5601:5601"
