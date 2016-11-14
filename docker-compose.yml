@@ -30,18 +30,19 @@ services:
      restart: always 
    fluentd:
      image: fluent/fluentd:ubuntu-base
-     links: 
-       - elasticsearch
-     ports:
-      - "24224:24224"
      volumes:
       - ./fluentd/etc/fluentd.conf:/fluentd/etc/fluent.conf
       - ./fluentd/etc/start.sh:/fluentd/etc/start.sh
      command: /fluentd/etc/start.sh
+     ports:
+      - "24224:24224"
    elasticsearch:
      build:
       context: ./elasticsearch/
       dockerfile: Dockerfile
+     ports:
+       - "9200:9200"
+       - "9300:9300"
      volumes:
        - /usr/share/elasticsearch/data:/usr/share/elasticsearch/data
    kibana:
@@ -49,7 +50,7 @@ services:
       context: ./kibana/
       dockerfile: Dockerfile
      links:
-       - elasticsearch
+     - fluentd
      restart: always
      ports:
        - "5601:5601"
