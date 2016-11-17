@@ -6,9 +6,6 @@ Multiple images are downloaded in the background and used to measure the through
 ### Connection Test
 [http://45.55.10.149](http://45.55.10.149)
 
-### Kibana
-[http://45.55.10.149:5601](http://45.55.10.149:5601)
-
 ## Installation
 
 ```sh
