@@ -53,3 +53,5 @@ You should see something like this:
 - Watch HPA scale pods up and down for custom metric being out of target latency (defaults to 20ms)
 
 
+### *Note:*
+I noticed that uBlock Origin doesn't like Boomerang embedded in the frontend site. You may need to whitelist the external IP for this to properly work.
