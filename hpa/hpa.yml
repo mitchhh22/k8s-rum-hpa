@@ -1,0 +1,23 @@
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  labels:
+    app: frontend
+  name: frontend
+  namespace: default
+spec:
+  maxReplicas: 10
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: frontend
+  metrics:
+    - type: Object
+      object:
+        target:
+          apiVersion: v1
+          kind: Service
+          name: statsd-exporter
+        metricName: mystats_rum_rt_load
+        targetValue: 20

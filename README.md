@@ -1,11 +1,45 @@
-# Boom
-An application latency testing tool based on [Boomerang](https://github.com/SOASTA/boomerang).
-Multiple images are downloaded in the background and used to measure the throughput and connection latency. Once the test is done (~3-5 seconds) the data, including all client data shown on the page, is sent back via a websocket. The socketio logs are collected by fluentd and then sent to elasticsearch. Analysis can then be done on Kibana. 
+# k8s-rum-hpa
+Demo of Kubernetes Horizontal Pod Autoscaler using custom RUM data as scaling metric. 
 
-## Installation
-
-```sh
-$ docker-compose build
-$ docker-compose up -d
 ```
++----------------------+           +-------------------+                       +--------------+     +--------------------+     +----------------+
+|  Frontend/Boomcatch  |---(UDP)-->|  statsd_exporter  |<---(scrape/metrics)---|  Prometheus  |<----| Prometheus Adapter |<----| K8s Custom HPA |
++----------------------+           +-------------------+                       +--------------+     +--------------------+     +----------------+
+```
+
+
+# Setup
+### Install prometheus-statsd-exporter
+```
+kubectl apply -f ./prometheus-statsd
+```
+### Install prometheus
+```
+kubectl apply -f ./prometheus
+```
+### Install prometheus k8s adapter
+```
+kubectl apply -f ./prometheus-adapter
+```
+### Install frontend
+```
+kubectl apply -f ./frontend
+```
+### Install custom metric HPA
+```
+kubectl apply -f ./hpa
+```
+### Test
+```
+kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/default/services/*/mystats_rum_rt_load"
+```
+You should see something like this:
+```
+{"kind":"MetricValueList","apiVersion":"custom.metrics.k8s.io/v1beta1","metadata":{"selfLink":"/apis/custom.metrics.k8s.io/v1beta1/namespaces/default/services/%2A/mystats_rum_rt_load"},"items":[{"describedObject":{"kind":"Service","namespace":"default","name":"statsd-exporter","apiVersion":"/v1"},"metricName":"mystats_rum_rt_load","timestamp":"2019-02-21T02:04:25Z","value":"139"}]}
+```
+
+# Usage
+- Watch k8s hpa resource: `kubectl get hpa -w`
+- Hit the external IP created via k8s frontend service a few times
+- Watch HPA scale pods up and down for custom metric being out of target latency (defaults to 20ms)
 

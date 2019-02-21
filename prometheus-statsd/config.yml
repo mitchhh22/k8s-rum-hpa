@@ -1,0 +1,12 @@
+apiVersion: v1
+data:
+  statsd_mapping.conf: |
+    mappings:
+    - match: mystats.rum.*.*
+      name: "boomcatch_test"
+      labels:
+        userAgent: "$1"
+kind: ConfigMap
+metadata:
+  name: statsd-exporter
+  namespace: default

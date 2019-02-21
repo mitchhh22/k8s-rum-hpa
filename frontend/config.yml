@@ -1,0 +1,66 @@
+---
+apiVersion: v1
+data:
+    index.html: |-
+        <!DOCTYPE html>
+        <html>
+
+        <head>
+            <title>K8S RUM HPA Demo</title>
+                <style>
+                    body {
+                        width: 35em;
+                        margin: 0 auto;
+                        font-family: Tahoma, Verdana, Arial, sans-serif;
+                    }
+                </style>
+        </head>
+
+        <body>
+            <h1>K8S RUM HPA Demo</h1>
+            <p>If you see this page, the K8S RUM HPA Demo is successfully installed and
+                working.</p>
+
+            <p><em>Thank you.</em></p>
+            <script src="js/boomerang.js"></script>
+            <script src="js/rt.js"></script>
+            <!-- any other plugins you want to include -->
+            <script>
+                BOOMR.init({
+                    beacon_url: "/data"
+                });
+            </script>
+        </body>
+
+        </html>
+kind: ConfigMap
+metadata:
+    name: frontend-html
+    namespace: default
+---
+apiVersion: v1
+data:
+    default.conf: |-
+        server {
+            listen       80;
+            server_name  localhost;
+
+
+            location / {
+                root   /usr/share/nginx/html;
+                index  index.html index.htm;
+            }
+
+            error_page   500 502 503 504  /50x.html;
+            location = /50x.html {
+                root   /usr/share/nginx/html;
+            }
+            location /data {
+              proxy_pass      http://127.0.0.1:9000;
+            }
+
+        }
+kind: ConfigMap
+metadata:
+    name: frontend-conf
+    namespace: default

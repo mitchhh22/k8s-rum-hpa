@@ -1,0 +1,46 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app: prometheus-adapter
+  name: prometheus-adapter:system:auth-delegator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:auth-delegator
+subjects:
+  - kind: ServiceAccount
+    name: prometheus-adapter
+    namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  creationTimestamp: "2019-02-20T20:09:10Z"
+  labels:
+    app: prometheus-adapter
+  name: prometheus-adapter-resource-reader
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: prometheus-adapter-resource-reader
+subjects:
+  - kind: ServiceAccount
+    name: prometheus-adapter
+    namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app: prometheus-adapter
+  name: prometheus-adapter-hpa-controller
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: prometheus-adapter-server-resources
+subjects:
+  - kind: ServiceAccount
+    name: prometheus-adapter
+    namespace: default
