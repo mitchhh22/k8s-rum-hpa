@@ -1,5 +1,6 @@
 # k8s-rum-hpa
 Demo of Kubernetes Horizontal Pod Autoscaler using custom RUM data as scaling metric. 
+
 Based on [Akamai's Boomerang](https://github.com/akamai/boomerang) and [Boomcatch](https://github.com/springernature/boomcatch) beacon metric receiver.
 
 Metrics are pushed to statsd_prometheus_exporter which is then scraped and stored by prometheus. 

@@ -12,5 +12,5 @@ kind: ConfigMap
 metadata:
   labels:
     app: prometheus-adapter
-  name: prom-adapter-prometheus-adapter
+  name: prometheus-adapter
   namespace: default
