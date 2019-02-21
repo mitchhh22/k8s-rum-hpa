@@ -1,0 +1,91 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: frontend
+  name: frontend
+  namespace: default
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: frontend
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: frontend
+    spec:
+      initContainers:
+        - command: ["/bin/sh", "-c"]
+          args:
+            [
+              "wget https://raw.githubusercontent.com/akamai/boomerang/master/plugins/rt.js -O /usr/share/nginx/html/js/rt.js; wget https://raw.githubusercontent.com/akamai/boomerang/master/boomerang.js -O /usr/share/nginx/html/js/boomerang.js",
+            ]
+          image: busybox
+          imagePullPolicy: IfNotPresent
+          name: fetch-boomerang
+          resources:
+            requests:
+              cpu: "0"
+              memory: "0"
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /usr/share/nginx/html/js
+              name: workdir
+      containers:
+        - image: nginx
+          imagePullPolicy: Always
+          name: frontend
+          resources:
+            requests:
+              cpu: "0"
+              memory: "0"
+          volumeMounts:
+            - mountPath: /usr/share/nginx/html/js
+              name: workdir
+            - mountPath: /usr/share/nginx/html/index.html
+              name: index
+              readOnly: true
+              subPath: index.html
+            - mountPath: /etc/nginx/conf.d/default.conf
+              name: conf
+              readOnly: true
+              subPath: default.conf
+        - image: coder95/boomcatch
+          args:
+            - --port
+            - "9000"
+            - --path
+            - /data
+            - --prefix
+            - mystats.rum.
+            - --fwdHost
+            - statsd-exporter
+            - --fwdPort
+            - "9125"
+          imagePullPolicy: Always
+          name: boomcatch
+          resources:
+            requests:
+              cpu: "0"
+              memory: "0"
+      volumes:
+        - emptyDir: {}
+          name: workdir
+        - configMap:
+            defaultMode: 420
+            name: frontend-html
+          name: index
+        - configMap:
+            defaultMode: 420
+            name: frontend-conf
+          name: conf
