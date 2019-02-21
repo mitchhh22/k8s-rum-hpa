@@ -37,17 +37,19 @@ kubectl apply -f ./frontend
 ```
 kubectl apply -f ./hpa
 ```
-### Test
+
+# Usage
+- Hit the external IP created via k8s frontend service a few times
+- Test metrics are incoming:
 ```
-kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/default/services/*/mystats_rum_rt_load"
+kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/default/services/*/boomcatch_load"
 ```
 You should see something like this:
 ```
-{"kind":"MetricValueList","apiVersion":"custom.metrics.k8s.io/v1beta1","metadata":{"selfLink":"/apis/custom.metrics.k8s.io/v1beta1/namespaces/default/services/%2A/mystats_rum_rt_load"},"items":[{"describedObject":{"kind":"Service","namespace":"default","name":"statsd-exporter","apiVersion":"/v1"},"metricName":"mystats_rum_rt_load","timestamp":"2019-02-21T02:04:25Z","value":"139"}]}
+{"kind":"MetricValueList","apiVersion":"custom.metrics.k8s.io/v1beta1","metadata":{"selfLink":"/apis/custom.metrics.k8s.io/v1beta1/namespaces/default/services/%2A/boomcatch_load"},"items":[{"describedObject":{"kind":"Service","namespace":"default","name":"statsd-exporter","apiVersion":"/v1"},"metricName":"boomcatch_load","timestamp":"2019-02-21T02:49:46Z","value":"325"}]}
 ```
 
-# Usage
 - Watch k8s hpa resource: `kubectl get hpa -w`
-- Hit the external IP created via k8s frontend service a few times
 - Watch HPA scale pods up and down for custom metric being out of target latency (defaults to 20ms)
+
 

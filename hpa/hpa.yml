@@ -19,5 +19,5 @@ spec:
           apiVersion: v1
           kind: Service
           name: statsd-exporter
-        metricName: mystats_rum_rt_load
+        metricName: boomcatch_load
         targetValue: 20

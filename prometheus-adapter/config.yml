@@ -2,7 +2,7 @@ apiVersion: v1
 data:
   config.yaml: |
     rules:
-    - seriesQuery: 'mystats_rum_rt_load'
+    - seriesQuery: 'boomcatch_load'
       resources:
         overrides:
           kubernetes_namespace: {resource: "namespace"}

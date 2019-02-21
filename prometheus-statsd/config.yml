@@ -3,7 +3,7 @@ data:
   statsd_mapping.conf: |
     mappings:
     - match: mystats.rum.*.*
-      name: "boomcatch_test"
+      name: "boomcatch_load"
       labels:
         userAgent: "$1"
 kind: ConfigMap
